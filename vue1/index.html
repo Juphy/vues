@@ -1,0 +1,105 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h3>数据响应式 原理</h3>
+        <div>{{ t }}</div>
+        <div>{{ t1 }}</div>
+        <div>{{ arr }}</div>
+
+        <h3>methods + 事件 + 数据响应式更新 原理</h3>
+        <div>
+            <p>{{ counter }}</p>
+            <button v-on:click="handleAdd">Add</button>
+            <button v-on:click="handleMinus">minus</button>
+        </div>
+
+        <h3>v-bind</h3>
+        <span v-vind:title="title">右键审查元素查看我的 title 属性</span>
+
+        <h3>v-model原理</h3>
+        <div>
+            <input type="text" v-model="inputVal">
+            <div>{{ inputVal }}</div>
+        </div>
+        <div>
+            <input type="checkbox" v-model="isChecked">
+            <div>{{ isChecked }}</div>
+        </div>
+        <div>
+            <select v-model="selectValue">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <div>{{selectValue}}</div>
+        </div>
+    </div>
+    <script type="module">
+        import Vue from './src/index.js'
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    t: 't value',
+                    t1: {
+                        tt1: 'tt1 value'
+                    },
+                    arr: [1, 2, 3],
+                    counter: 0,
+                    title: 'title',
+                    inputVal: 'test',
+                    isChecked: true,
+                    selectValue: 2
+                }
+            },
+            methods: {
+                handleAdd() {
+                    this.counter++
+                },
+                handleMinus() {
+                    this.counter--
+                }
+            }
+        })
+
+        setTimeout(() => {
+            console.log(vm.t)
+            vm.t = 'change t value'
+            console.log(vm.t)
+        }, 1000)
+
+        setTimeout(() => {
+            vm.t = {
+                tt: 'tt value'
+            }
+            console.log(vm.t.tt)
+        }, 2000)
+
+        setTimeout(() => {
+            vm.t1.tt1 = 'change tt1 value'
+            console.log(vm.t1.tt1)
+        }, 3000)
+
+        setTimeout(() => {
+            console.log(vm.t1)
+            vm.t1 = 't1 value'
+            console.log(vm.t1)
+        }, 4000)
+
+        setTimeout(() => {
+            console.log(vm.arr)
+            vm.arr.push(4)
+            console.log(vm.arr)
+        }, 5000)                
+    </script>
+</body>
+
+</html>
