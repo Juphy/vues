@@ -10,6 +10,7 @@ export default function defineReactive(obj, key, val){
     // 递归调用，处理val仍然为对象的情况
     let childOb = observe(val)
 
+    // 对象中的每个属性有一个闭包形成的dep实例
     const dep = new Dep()
 
     Object.defineProperty(obj, key, {
@@ -19,6 +20,7 @@ export default function defineReactive(obj, key, val){
                 dep.depend()
                 // 如果存在子observe
                 if(childOb){
+                    // 此dep为对象本身
                     childOb.dep.depend()
                 }
             }
