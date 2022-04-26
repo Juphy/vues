@@ -1,4 +1,5 @@
 import initData from './initData.js'
+import mount from './compiler/index.js'
 /**
  * Vue 构造函数
  * @param {*} options 初始化时传递的配置对象
@@ -15,4 +16,13 @@ Vue.prototype._init = function (options) {
     // 代理data对象上的各个属性到Vue实例
     // data对象上的各个属性设置成响应式
     initData(this)
+
+    // 如果存在el配置项，则调用$mount方法编译模板
+    if(this.$options.el){
+        this.$mount()
+    }
+}
+
+Vue.prototype.$mount = function(){
+    mount(this)
 }
